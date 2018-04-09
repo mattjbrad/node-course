@@ -1,15 +1,51 @@
 const utils = require('./utils');
+const expect = require('expect');
 
 it('should add two numbers', ()=>{
     var result = utils.add(33,11);
-    if(result!==44){
-        throw new Error(`Expected 44, we got ${result}`);
-    }
+    expect(result).toBe(44).toBeA('number');
+    //Expect replaces this kind of syntax
+    // if(result!==44){
+    //     throw new Error(`Expected 44, we got ${result}`);
+    // }
+
 });
 
 it('should square a number', ()=>{
     var result = utils.square(9);
-    if(result!==81){
-        throw new Error(`Expected 81, we got ${result}`);
-    }
+    expect(result).toBe(81).toBeA('number');
+    // if(result!==81){
+    //     throw new Error(`Expected 81, we got ${result}`);
+    // }
+
+});
+
+it('should expect some values', ()=>{
+    expect(12).toNotBe(11);
+});
+
+it('should expect some values', ()=>{
+    expect({name:"matt"}).toEqual({name:"matt"});
+});
+
+it('should expect inclusion of values', ()=>{
+    expect([2,3,4]).toInclude(2);
+});
+
+it('should expect exclusion of values', ()=>{
+    expect([2,3,4]).toExclude(1);
+});
+
+it('should expect inclusion of values object', ()=>{
+    expect({
+        name:'matt',
+         age:27})
+    .toInclude({name:'matt'});
+});
+
+it('should expect names to be split', ()=>{
+
+    var user = utils.setName({location:'Manchester', age:27}, 'Matthew Bradshaw');
+    expect(user).toInclude({first:"Matthew",last:"Bradshaw"}).toBeA("object");
+
 });
