@@ -49,3 +49,19 @@ it('should expect names to be split', ()=>{
     expect(user).toInclude({first:"Matthew",last:"Bradshaw"}).toBeA("object");
 
 });
+
+//Need to pass done as an argument to it callback so it knows it is a async call
+it('should add two numbers asynchronously', (done)=>{
+    utils.asyncAdd(33,11, (result)=>{
+        expect(result).toBe(44).toBeA('number');
+        //Call done when it should of finished
+        done();
+    });
+});
+
+it('should square 2 numbers asynchronously', (done)=>{
+    utils.asyncSquare(9, (result)=>{
+        expect(result).toBe(81).toBeA('number');
+        done();
+    }); 
+});
