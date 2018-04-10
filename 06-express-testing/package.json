@@ -6,6 +6,7 @@
   "dependencies": {
     "expect": "^1.20.2",
     "express": "^4.16.3",
+    "rewire": "^3.0.2",
     "supertest": "^3.0.0"
   },
   "devDependencies": {
