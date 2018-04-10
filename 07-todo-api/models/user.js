@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-module.exports.userSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema({
     email:{
         type:String,
         required : true,
@@ -8,3 +8,5 @@ module.exports.userSchema = new mongoose.Schema({
         minlength : 1
     }
 });
+
+module.exports.User = mongoose.model('User', userSchema);

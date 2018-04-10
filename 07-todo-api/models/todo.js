@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-module.exports.todoSchema = new mongoose.Schema({
+var todoSchema = new mongoose.Schema({
     text:{
         type:String,
         required : true,
@@ -16,3 +16,5 @@ module.exports.todoSchema = new mongoose.Schema({
         type:Number
     }
 });
+
+module.exports.Todo = mongoose.model('Todo', todoSchema);

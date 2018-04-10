@@ -1,25 +1,24 @@
-var mongoose = require('mongoose');
+var express = require('express');
+var bodyPaser = require('body-parser');
 
-var todo = require('../models/todo');
-var user = require('../models/user');
+var {mongoose} = require('../db/mongoose');
+var {Todo} = require('../models/todo');
+var {User} = require('../models/user');
 
-mongoose.Promise = global.Promise;
+var app = express();
+app.use(bodyPaser.json());
 
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+app.post('/todos', (req, res)=>{
+    var newTodo = new Todo(req.body);
+    newTodo.save().then((todo)=>{
+        res.send(todo);
+        console.log(`Document inserted into db`);
+    }, (error)=>{
+        res.status(400).send(error);
+        console.log('ERROR');
+    });
+});
 
-var Todo = mongoose.model('Todo', todo.todoSchema);
-var User = mongoose.model('User', user.userSchema);
-
-// var newTodo = new Todo({text:'This is the text 2'});
-// newTodo.save().then((todo)=>{
-//     console.log(todo);
-// }, (e)=>{
-//     console.log(e);
-// });
-
-var newUser = new User({email:'matt@matt.com'});
-newUser.save().then((user)=>{
-    console.log(user);
-}, (e)=>{
-    console.log(e);
+app.listen(3000, ()=>{
+    console.log('server started');
 });
