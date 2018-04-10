@@ -1,4 +1,10 @@
-const MongoClient = require('mongodb').MongoClient;
+//Syntax is the same
+//const MongoClient = require('mongodb').MongoClient;
+const { MongoClient, ObjectID} = require("mongodb");
+
+//Can generate our own id's if we want
+var obj = new ObjectID();
+console.log(obj);
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client)=>{
     if(err){
@@ -26,6 +32,9 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client)=>{
             return console.log('Cant insert', err);
         }
         console.log(JSON.stringify(result.ops, undefined, 2));
+        //Timestamp when the document was created
+        console.log(JSON.stringify(result.ops[0]._id.getTimestamp()));
+
     });
 
     client.close();
