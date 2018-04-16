@@ -8,6 +8,8 @@ var {User} = require('../models/user');
 var app = express();
 app.use(bodyPaser.json());
 
+const port = process.env.PORT || 3000;
+
 app.get('/todos', (req, res)=>{
     Todo.find().then((todos)=>{
         res.send({todos});
@@ -45,7 +47,7 @@ app.post('/todos', (req, res)=>{
     });
 });
 
-app.listen(3000, ()=>{
+app.listen(PORT, ()=>{
     console.log('server started');
 });
 
