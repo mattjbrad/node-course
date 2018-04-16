@@ -38,12 +38,10 @@ app.get('/todos/:id', (req,res)=>{
 
 app.delete('/todos/:id', (req, res)=>{
     var id = req.params.id;
-    console.log(id);
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).send('Not valid');
     }
     Todo.findByIdAndRemove(id).then((todo)=>{
-        console.log(todo);
         if(todo){
             res.send({todo});
         } else {
