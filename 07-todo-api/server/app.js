@@ -36,6 +36,24 @@ app.get('/todos/:id', (req,res)=>{
     })
 });
 
+app.delete('/todos/:id', (req, res)=>{
+    var id = req.params.id;
+    console.log(id);
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).send('Not valid');
+    }
+    Todo.findByIdAndRemove(id).then((todo)=>{
+        console.log(todo);
+        if(todo){
+            res.send({todo});
+        } else {
+            res.status(404).send('Not found');
+        }
+    }, (e)=>{
+        res.status(400).send(e);
+    })
+});
+
 app.post('/todos', (req, res)=>{
     var newTodo = new Todo(req.body);
     newTodo.save().then((todo)=>{
@@ -47,7 +65,7 @@ app.post('/todos', (req, res)=>{
     });
 });
 
-app.listen(PORT, ()=>{
+app.listen(port, ()=>{
     console.log('server started');
 });
 
