@@ -92,6 +92,23 @@ app.post('/todos', (req, res)=>{
     });
 });
 
+app.post('/users', (req, res) => {
+
+    //dont want users to mess with the token attributes
+    var body = _.pick(req.body, ['email', 'password']);
+    var newUser = new User(body);
+    console.log(newUser);
+    newUser.save().then(() => {
+        return newUser.generateAuthToken();
+    }).then((token) => {
+        res.header('x-auth', token).send(newUser);
+    }).catch((err) => {
+        res.status(400).send(err);
+        console.log('catch');
+    });
+
+});
+
 app.listen(port, ()=>{
     console.log('server started');
 });
