@@ -5,6 +5,7 @@ var _ = require('lodash');
 var {mongoose} = require('../db/mongoose');
 var {Todo} = require('../models/todo');
 var {User} = require('../models/user');
+var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
 app.use(bodyPaser.json());
@@ -96,8 +97,7 @@ app.post('/users', (req, res) => {
 
     //dont want users to mess with the token attributes
     var body = _.pick(req.body, ['email', 'password']);
-    var newUser = new User(body);
-    console.log(newUser);
+    var newUser = new User(body);    
     newUser.save().then(() => {
         return newUser.generateAuthToken();
     }).then((token) => {
@@ -107,6 +107,10 @@ app.post('/users', (req, res) => {
         console.log('catch');
     });
 
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
 });
 
 app.listen(port, ()=>{
